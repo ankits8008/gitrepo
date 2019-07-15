@@ -3,14 +3,14 @@ pipeline {
          stages {
                  stage('One') {
                  steps {
-                     echo 'Hi, this is Zulaikha from edureka'
+                     echo 'Hello, this is Zulaikha from edureka'
                        }
                  }
           }
 }
 node('master') {
     stage("Checkout") {
-        checkout scm
+        
         sh 'ls -l'
     }
 }

@@ -7,7 +7,8 @@ pipeline {
                        }
                  }
           }
-         void buildStage(String context, Closure closure) {
+}
+void buildStage(String context, Closure closure) {
     try {
         stage(context) {
             setBuildStatus(context, "In progress", "PENDING");
@@ -19,4 +20,3 @@ pipeline {
         throw e;
     }
 } 
-}

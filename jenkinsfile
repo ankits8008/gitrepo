@@ -9,7 +9,7 @@ pipeline {
           }
 }
 node('ubunutu') {
-    buildStage("Checkout") {
+    stage("Checkout") {
         checkout scm
         sh 'git clean -fdx'
     }

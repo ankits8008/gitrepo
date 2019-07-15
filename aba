@@ -1,0 +1,60 @@
+properties([
+    pipelineTriggers([[$class: 'PeriodicFolderTrigger', interval: '1m']])
+])
+
+def triggers = []
+if (env.BRANCH_NAME == 'master') {
+  triggers << [
+    $class: 'hudson.triggers.TimerTrigger',
+    spec: "H 14 * * *"
+  ]
+}
+
+properties([
+    pipelineTriggers(triggers)
+])
+
+node('Target') {
+    buildStage("Checkout") {
+        checkout scm
+        sh 'git clean -fdx'
+    }
+
+    buildStage("Build") {
+        sh 'BUILD_SERVER=1 BUILD_TYPE=NB ./build.sh'
+    }
+
+    buildStage("PostBuild") {
+        sh "BUILD_SERVER=1 ./createpackages.sh"
+        sh 'echo $BRANCH_NAME $BUILD_NUMBER > consoleText'
+        sh 'BUILD_SERVER=1 ./packageFiles.sh'
+        archiveArtifacts '**/consoleText'
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'BuildObjects*.tar.gz'
+        archiveArtifacts allowEmptyArchive: true, artifacts: '**/build/outputs/logs/**/*'
+        archiveArtifacts allowEmptyArchive: true, artifacts: '**/build/reports/**/*'
+        archiveArtifacts allowEmptyArchive: true, artifacts: '**/build/outputs/code-coverage/**/*'
+    }
+}
+
+void buildStage(String context, Closure closure) {
+    try {
+        stage(context) {
+            setBuildStatus(context, "In progress", "PENDING");
+            closure();
+            setBuildStatus(context, "Success", "SUCCESS");
+        }
+    } catch (Exception e) {
+        setBuildStatus(context, "Failed", "FAILURE");
+        throw e;
+    }
+}
+
+void setBuildStatus(String context, String message, String state) {
+    step([
+        $class: "GitHubCommitStatusSetter",
+        contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
+        reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://gitext.elektrobitautomotive.com/GM-Gina/vaf"],
+        errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+        statusResultSource: [$class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
+    ]);
+}

@@ -9,7 +9,7 @@ pipeline {
           }
 }
 node('master') {
-    stage("Checkout") {
+    buildStage("Checkout") {
         checkout scm
          sh 'ls -ltr'
     }

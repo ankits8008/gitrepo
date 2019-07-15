@@ -11,7 +11,7 @@ pipeline {
 node('master') {
     stage("Checkout") {
         checkout scm
-         bat 'ls -ltr'
+         sh 'ls -ltr'
     }
 }
 properties([

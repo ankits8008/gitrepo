@@ -20,3 +20,9 @@ void buildStage(String context, Closure closure) {
         throw e;
     }
 } 
+node('Target') {
+    buildStage("Checkout") {
+        checkout scm
+        sh 'git clean -fdx'
+    }
+}

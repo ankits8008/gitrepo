@@ -11,7 +11,7 @@ pipeline {
 node('master') {
     stage("Checkout") {
         checkout scm
-         sh 'ls -ltr'
+         sh 'hostname'
     }
 }
 properties([

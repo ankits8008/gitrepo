@@ -8,7 +8,7 @@ pipeline {
                  }
           }
 }
-node('ubunutu') {
+node('master') {
     stage("Checkout") {
         checkout scm
         sh 'git clean -fdx'

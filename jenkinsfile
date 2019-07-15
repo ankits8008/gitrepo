@@ -6,5 +6,17 @@ pipeline {
                      echo 'Hi, this is Zulaikha from edureka'
                        }
                  }
-          }              
+          }
+         void buildStage(String context, Closure closure) {
+    try {
+        stage(context) {
+            setBuildStatus(context, "In progress", "PENDING");
+            closure();
+            setBuildStatus(context, "Success", "SUCCESS");
+        }
+    } catch (Exception e) {
+        setBuildStatus(context, "Failed", "FAILURE");
+        throw e;
+    }
+} 
 }

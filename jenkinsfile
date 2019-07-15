@@ -13,3 +13,14 @@ node('master') {
         checkout scm
     }
 }
+properties([
+    pipelineTriggers([[$class: 'PeriodicFolderTrigger', interval: '1m']])
+])
+
+def triggers = []
+if (env.BRANCH_NAME == 'master') {
+  triggers << [
+    $class: 'hudson.triggers.TimerTrigger',
+    spec: "H 14 * * *"
+  ]
+}

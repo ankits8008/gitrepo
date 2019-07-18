@@ -10,6 +10,7 @@ pipeline {
 }
 node('master') {
     stage("branch") {
+    bat "git checkout master"
         bat "git pull "
         bat "git branch "
     }

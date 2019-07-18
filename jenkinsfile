@@ -11,7 +11,6 @@ pipeline {
 node('master') {
     stage("Checkout") {
         checkout scm
-         sh 'hostname'
     }
 }
 properties([

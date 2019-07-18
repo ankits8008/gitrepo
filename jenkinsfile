@@ -10,7 +10,7 @@ pipeline {
 }
 node('master') {
     stage("Checkout") {
-        bat "dir"
+        bat "git --version"
     }
 }
 properties([

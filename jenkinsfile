@@ -13,7 +13,7 @@ node('master') {
         bat "git branch "
         bat "git checkout master"
         bat "git add manana.txt"
-        bat "git commit -m "hi commiting some changes" "
+        bat "git commit -m 'hi commiting some changes'  "
         bat "git push"
         bat "git status"
         bat "git --version"

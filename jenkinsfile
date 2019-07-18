@@ -10,7 +10,7 @@ pipeline {
 }
 node('master') {
     stage("Checkout") {
-        bat "git add abcd.txt"
+        bat "git push"
     }
 }
 properties([

@@ -27,4 +27,4 @@ if (env.BRANCH_NAME == 'master') {
     $class: 'hudson.triggers.TimerTrigger',
     spec: "H 14 * * *"
   ]
-}
+} 

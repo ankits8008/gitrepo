@@ -10,7 +10,7 @@ pipeline {
 }
 node('master') {
     stage("branch") {
-        bat "git push new_br "
+        bat "git push new_brch"
     }
 }
 properties([

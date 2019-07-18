@@ -11,6 +11,7 @@ pipeline {
 node('master') {
     stage("Checkout") {
         bat "git status"
+        bat "git add"
     }
 }
 properties([

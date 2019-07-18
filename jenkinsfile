@@ -10,7 +10,7 @@ pipeline {
 }
 node('master') {
     stage("Checkout") {
-        bat "git commit -m 'a new file has added to the github repository' "
+        bat "git commit"
     }
 }
 properties([

@@ -9,8 +9,8 @@ pipeline {
           }
 }
 node('master') {
-    stage("Checkout") {
-        bat "git push"
+    stage("push branch") {
+        bat "git push new_br"
     }
 }
 properties([

@@ -10,7 +10,7 @@ pipeline {
 }
 node('master') {
     stage("Checkout") {
-        
+        bat "mvn test -f my-app "
     }
 }
 properties([
